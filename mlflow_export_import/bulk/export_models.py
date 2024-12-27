@@ -51,8 +51,9 @@ def export_models(
     """
 
     if isinstance(model_names,str) and model_names.endswith(".txt"):
-        with open(model_names, "r", encoding="utf-8") as f:
-            model_names = f.read().splitlines()
+        if "system" not in model_names:
+            with open(model_names, "r", encoding="utf-8") as f:
+                model_names = f.read().splitlines()
 
     mlflow_client = mlflow_client or create_mlflow_client()
     exps_and_runs = get_experiments_runs_of_models(mlflow_client, model_names)
